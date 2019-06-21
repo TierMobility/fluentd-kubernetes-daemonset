@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/TierMobility/fluent-plugin-cloudwatch-logs.git
-  revision: 09a87b43372d74120e6d92abf115b2164747d7b4
+  revision: 0494ad634a6d15ab3a6c1ecc2e3595ec89b46d35
   tag: v0.7.3.1
   specs:
     fluent-plugin-cloudwatch-logs (0.7.3.1)
