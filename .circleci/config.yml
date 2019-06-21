@@ -10,12 +10,11 @@ jobs:
 
     environment:
       REPOSITORY_NAME: 'tier/fluentd-kubernetes-daemonset'
-      DOCKER_FILE: 'docker-image/v1.4/debian-cloudwatch/Dockerfile'
 
     docker:
       - image: 373437620866.dkr.ecr.eu-central-1.amazonaws.com/tier/buildtools:latest
 
-    working_directory: ~/repo
+    working_directory: ~/repo/docker-image/v1.4/debian-cloudwatch
     steps:
       - setup_remote_docker:  # required for running docker commands, creates a remote environment
           docker_layer_caching: true # enable caching of docker layers from previous builds to speed up image creation
@@ -24,18 +23,15 @@ jobs:
           create-repo: true
           repo: ${REPOSITORY_NAME}
           tag: ${CIRCLE_SHA1:0:8}
-          dockerfile: ${DOCKER_FILE}
       # this build will essentially just tag the image that has already been built
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           repo: ${REPOSITORY_NAME}
           tag: latest-${CIRCLE_BRANCH//\//-}
-          dockerfile: ${DOCKER_FILE}
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           repo: ${REPOSITORY_NAME}
           tag: v1.4.2-debian-cloudwatch-1.0
-          dockerfile: ${DOCKER_FILE}
       - run:
           name: "Set ECR repo permissions to allow access from other AWS accounts"
           command: >
@@ -66,7 +62,7 @@ jobs:
 
 workflows:
   version: 2
-  deploy:
+  build:
     jobs:
     - build-and-push-image:
         context: global-production
