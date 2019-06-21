@@ -20,19 +20,19 @@ jobs:
       - setup_remote_docker:  # required for running docker commands, creates a remote environment
           docker_layer_caching: true # enable caching of docker layers from previous builds to speed up image creation
       - aws-ecr/build-and-push-image:
-          workspace-root: ${DOCKER_SRC}
+          path: ${DOCKER_SRC}
           region: AWS_DEFAULT_REGION
           create-repo: true
           repo: ${REPOSITORY_NAME}
           tag: ${CIRCLE_SHA1:0:8}
       # this build will essentially just tag the image that has already been built
       - aws-ecr/build-and-push-image:
-          workspace-root: ${DOCKER_SRC}      
+          path: ${DOCKER_SRC}      
           region: AWS_DEFAULT_REGION
           repo: ${REPOSITORY_NAME}
           tag: latest-${CIRCLE_BRANCH//\//-}
       - aws-ecr/build-and-push-image:
-          workspace-root: ${DOCKER_SRC}
+          path: ${DOCKER_SRC}
           region: AWS_DEFAULT_REGION
           repo: ${REPOSITORY_NAME}
           tag: v1.4.2-debian-cloudwatch-1.0
