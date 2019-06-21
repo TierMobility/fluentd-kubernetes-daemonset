@@ -37,7 +37,7 @@ gem "fluent-plugin-loggly"
 <% when "cloudwatch" %>
 gem "aws-sdk-cloudwatchlogs", "~> 1.0"
 <% if is_v1 %>
-gem "fluent-plugin-cloudwatch-logs", "~> 0.7.3"
+gem "fluent-plugin-cloudwatch-logs", :git => "https://github.com/TierMobility/fluent-plugin-cloudwatch-logs.git", :tag => "v0.7.3.1"
 <% else %>
 gem "fluent-plugin-cloudwatch-logs", "0.4.5"
 <% end %>
